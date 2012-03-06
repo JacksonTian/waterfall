@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Waterfall</title>
+    <script src="deps/underscore-min.js"></script>
+    <script src="deps/eventproxy.js"></script>
+    <script src="deps/jquery-1.7.1.js"></script>
+    <script src="deps/jquery.mousewheel.js"></script>
+    <script src="waterfall.js"></script>
+  </head>
+  <body>
+    <ul>
+    </ul>
+    <script>
+      var waterfall = new Waterfall();
+      waterfall.on("drop", function () {
+        
+      });
+      waterfall.setSource([1, 2, 3, 4, 5, 6, 7]);
+    </script>
+  </body>
+</html>
