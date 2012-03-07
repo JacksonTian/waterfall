@@ -26,7 +26,7 @@
         this.shown++;
       }
       if (this.shown === this.source.length) {
-        that.fire("end");
+        that.fire("end", this.source.length);
       }
       if (!that.isFilled()) {
         that.tryShow();
@@ -35,7 +35,7 @@
       }
     });
 
-    this.on("preload", function () {
+    this.on("preloaded", function () {
       if (!that.isFilled()) {
         that.tryShow();
       }
@@ -69,6 +69,10 @@
     this.node.append("<li>" + item + "</li>");
   };
   
+  Waterfall.prototype.preload = function (item, callback) {
+    callback(item);
+  };
+
   Waterfall.prototype.isFilled = function () {
     if (htmlRef.height() < documentRef.height()) {
       return false;
@@ -90,6 +94,7 @@
       this.show(item);
       this.fire("shown");
     } else {
+      this.fire("loading");
       this.tryPreload();
     }
   };
@@ -100,9 +105,14 @@
     }
     if (this.index < this.source.length) {
       var item = this.source[this.index];
-      this.queue.push(item);
-      this.index++;
-      this.fire("preload");
+      this.status = "pending";
+      var that = this;
+      this.preload(item, function (ret) {
+        that.status = "ready";
+        that.queue.push(ret);
+        that.index++;
+        that.fire("preloaded");
+      });
     }
   };
   window.Waterfall = Waterfall;
