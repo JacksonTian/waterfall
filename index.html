@@ -8,16 +8,24 @@
     <script src="deps/jquery-1.7.1.js"></script>
     <script src="deps/jquery.mousewheel.js"></script>
     <script src="waterfall.js"></script>
+    <style>
+      ul, li {list-style: none;}
+    </style>
   </head>
   <body>
     <ul>
     </ul>
     <script>
-      var waterfall = new Waterfall();
-      waterfall.on("drop", function () {
-        
+      var node = $("ul");
+      var waterfall = new Waterfall(node);
+      waterfall.on("end", function () {
+        node.append("<li>显示完啦<li>");
       });
-      waterfall.setSource([1, 2, 3, 4, 5, 6, 7]);
+      // 外挂显示方法
+      waterfall.show = function (item) {
+        node.append("<li>第" + item + "个元素</li>");
+      };
+      waterfall.setSource(_.range(0, 70));
     </script>
   </body>
 </html>
