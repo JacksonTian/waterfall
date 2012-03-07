@@ -39,7 +39,7 @@
       if (!that.isFilled()) {
         that.tryShow();
       }
-      if (that.index < that.queue.length & that.queue.length < that.step) {
+      if (that.index < that.source.length && that.queue.length < that.step) {
         that.tryPreload();
       }
     });
@@ -72,15 +72,12 @@
   Waterfall.prototype.preload = function (item, callback) {
     callback(item);
   };
-
+  
   Waterfall.prototype.isFilled = function () {
     if (htmlRef.height() < documentRef.height()) {
       return false;
     }
-    if (documentRef.scrollTop() + windowRef.height() < documentRef.height() - 100) {
-      return false;
-    }
-    return true;
+    return (documentRef.scrollTop() + windowRef.height() < documentRef.height() - 100);
   };
 
   Waterfall.prototype.setSource = function (source) {
@@ -94,7 +91,9 @@
       this.show(item);
       this.fire("shown");
     } else {
-      this.fire("loading");
+      if (this.index < this.source.length) {
+        this.fire("loading");
+      }
       this.tryPreload();
     }
   };
