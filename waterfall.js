@@ -10,6 +10,7 @@
     this.node = node;
     this.queue = [];
     this.shown = 0;
+    this.compare = 150;
     this.init();
   };
   // 继承EventProxy
@@ -57,6 +58,11 @@
       }
     });
   };
+
+  Waterfall.prototype.setCompare = function (compare) {
+    this.compare = compare;
+  };
+
   // 重设瀑布流
   Waterfall.prototype.reset = function () {
     this.node.empty();
@@ -77,7 +83,7 @@
     if (htmlRef.height() < documentRef.height()) {
       return false;
     }
-    return (documentRef.scrollTop() + windowRef.height() < documentRef.height() - 100);
+    return (documentRef.scrollTop() + windowRef.height() < documentRef.height() - this.compare);
   };
 
   Waterfall.prototype.setSource = function (source) {
