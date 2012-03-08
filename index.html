@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Waterfall</title>
+    <script src="deps/underscore-min.js"></script>
+    <script src="deps/eventproxy.js"></script>
+    <script src="deps/jquery-1.7.1.js"></script>
+    <script src="deps/jquery.mousewheel.js"></script>
+    <script src="waterfall.js"></script>
+    <style>
+      ul, li {list-style: none;}
+    </style>
+  </head>
+  <body>
+    <ul>
+    </ul>
+    <script>
+      var node = $("ul");
+      var waterfall = new Waterfall(node);
+      waterfall.on("end", function (length) {
+        node.append("<li>一共" + length + "个元素都显示完啦<li>");
+      });
+      // 外挂显示方法
+      waterfall.show = function (item) {
+        node.append("<li>第" + item + "个元素</li>");
+      };
+      waterfall.preload = function (item, callback) {
+        setTimeout(function () {
+          callback("外挂元素：" + item);
+        }, 100);
+      };
+      waterfall.setSource(_.range(0, 70));
+    </script>
+  </body>
+</html>
+
