@@ -1,1 +1,1 @@
-(Demo)[http://jacksontian.github.com/waterfall/]
+[Demo](http://jacksontian.github.com/waterfall/)
